@@ -1,16 +1,28 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 
 function App() {
-  const [data, setData] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState(null);
+  // Function to send the POST request
+  const sendPostRequest = () => {
+    // Define the API endpoint URL for POST
+    const postUrl = 'https://jsonplaceholder.typicode.com/posts';
 
-  useEffect(() => {
-    // Define the API endpoint URL
-    const apiUrl = 'https://jsonplaceholder.typicode.com/';
+    // Data to send in the POST request (in JSON format)
+    const postData = {
+      title: 'Sample Title',
+      body: 'Sample Body',
+    };
 
-    // Perform the GET request when the component mounts
-    fetch(apiUrl)
+    // Create the fetch options for the POST request
+    const fetchOptions = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(postData),
+    };
+
+    // Send the POST request using fetch
+    fetch(postUrl, fetchOptions)
       .then((response) => {
         if (!response.ok) {
           throw new Error('Network response was not ok');
@@ -18,25 +30,17 @@ function App() {
         return response.json(); // Parse the response JSON
       })
       .then((data) => {
-        setData(data); // Store the response data in state
-        setIsLoading(false);
+        console.log('POST request successful:', data); // Print response to console
       })
       .catch((error) => {
-        setError(error); // Handle errors
-        setIsLoading(false);
+        console.error('Error:', error); // Print error to console
       });
-  }, []); // Empty dependency array to run the effect only once
+  };
 
   return (
     <div className="App">
-      <h1>JSONPlaceholder Data</h1>
-      {isLoading ? (
-        <p>Loading...</p>
-      ) : error ? (
-        <p>Error: {error.message}</p>
-      ) : (
-        <pre>{JSON.stringify(data, null, 2)}</pre>
-      )}
+      <h1>POST Request and Console Output</h1>
+      <button onClick={sendPostRequest}>Send POST Request</button>
     </div>
   );
 }
