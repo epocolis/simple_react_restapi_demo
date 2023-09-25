@@ -4,12 +4,15 @@ function App() {
   // Function to send the POST request
   const sendPostRequest = () => {
     // Define the API endpoint URL for POST
-    const postUrl = 'https://jsonplaceholder.typicode.com/posts';
+    const postUrl = 'https://api.fluxapps.net/Flamel/irrigation/fields';
 
     // Data to send in the POST request (in JSON format)
     const postData = {
-      title: 'Sample Title',
-      body: 'Sample Body',
+      // Include the required data for your specific API endpoint
+      // For example:
+      fieldId: 'your_field_id',
+      sensorId: 'your_sensor_id',
+      value: 'your_value',
     };
 
     // Create the fetch options for the POST request
@@ -17,6 +20,7 @@ function App() {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        // Include any additional headers if required
       },
       body: JSON.stringify(postData),
     };
@@ -39,7 +43,7 @@ function App() {
 
   return (
     <div className="App">
-      <h1>POST Request and Console Output</h1>
+      <h1>POST Request to https://api.fluxapps.net</h1>
       <button onClick={sendPostRequest}>Send POST Request</button>
     </div>
   );
